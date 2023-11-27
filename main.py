@@ -56,8 +56,7 @@ class Search(QWidget):
         self.LCD = QListWidget(self)
         self.LCD.resize(479, 350)
         self.LCD.move(5, 60)
-        text = self.serch_search()
-        self.LCD.addItem(text)
+        self.serch_search()
     
     def serch_search(self):
         directory = './folder'
@@ -65,7 +64,7 @@ class Search(QWidget):
         for root, dirs, files in os.walk(directory):
             for file in files:
                 # Печать пути к файлу
-                return os.path.join(root, file)
+                self.LCD.addItem(os.path.join(root, file))
     
     def butn_search(self):
         if not self.new_window:  # Проверяем, создано ли уже новое окно
@@ -104,6 +103,10 @@ class Research(QWidget):
         self.LCD1.resize(300, 20)
         self.LCD1.move(5, 20)
 
+        self.btn5 = QPushButton('Поиск', self)
+        self.btn5.resize(85, 22)
+        self.btn5.move(310, 19)
+
 
 class Sozdanie(QWidget):
     def __init__(self):
@@ -112,9 +115,13 @@ class Sozdanie(QWidget):
         self.setWindowTitle('Создать файл')
         self.setGeometry(400, 415, 400, 415)
 
-        self.LCD1 = QLineEdit(self)
-        self.LCD1.resize(300, 20)
-        self.LCD1.move(5, 20)
+        self.LCD2 = QLineEdit(self)
+        self.LCD2.resize(300, 20)
+        self.LCD2.move(5, 20)
+
+        self.btn5 = QPushButton('Создать', self)
+        self.btn5.resize(85, 22)
+        self.btn5.move(310, 19)
 
 
 class Delete(QWidget):
@@ -132,9 +139,13 @@ class Rename(QWidget):
         self.setWindowTitle('Переименовать файл')
         self.setGeometry(400, 415, 400, 415)
 
-        self.LCD1 = QLineEdit(self)
-        self.LCD1.resize(300, 20)
-        self.LCD1.move(5, 20)
+        self.LCD3 = QLineEdit(self)
+        self.LCD3.resize(300, 20)
+        self.LCD3.move(5, 20)
+
+        self.btn5 = QPushButton('Переименовать', self)
+        self.btn5.resize(85, 22)
+        self.btn5.move(310, 19)
 
 
 class Edit(QWidget):
@@ -143,6 +154,14 @@ class Edit(QWidget):
         
         self.setWindowTitle('Редактировать файл')
         self.setGeometry(400, 415, 400, 415)
+
+        self.LCD4 = QLineEdit(self)
+        self.LCD4.resize(390, 380)
+        self.LCD4.move(5, 5)
+
+        self.btn5 = QPushButton('Сохранить', self)
+        self.btn5.resize(85, 22)
+        self.btn5.move(310, 390)
 
 
 if __name__ == '__main__':
