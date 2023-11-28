@@ -60,7 +60,6 @@ class Search(QWidget):
     
     def serch_search(self):
         directory = './folder'
-        spis = []
         for root, dirs, files in os.walk(directory):
             for file in files:
                 # Печать пути к файлу
@@ -131,6 +130,8 @@ class Delete(QWidget):
         self.setWindowTitle('Удалить файл')
         self.setGeometry(400, 415, 400, 415)
 
+        
+
 
 class Rename(QWidget):
     def __init__(self):
@@ -162,6 +163,25 @@ class Edit(QWidget):
         self.btn5 = QPushButton('Сохранить', self)
         self.btn5.resize(85, 22)
         self.btn5.move(310, 390)
+
+
+class Delete_Win(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle('Точно?')
+        self.setGeometry(100, 70, 100, 70)
+
+        self.label = QLabel('Вы уверены, что хотите удалить этот файл?', self)
+        self.label.move(33, 20)
+
+        self.btn6 = QPushButton('Нет', self)
+        self.btn6.resize(85, 22)
+        self.btn6.move(10, 50)
+
+        self.btn7 = QPushButton('Да', self)
+        self.btn7.resize(85, 22)
+        self.btn7.move(80, 50)
 
 
 if __name__ == '__main__':
