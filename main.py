@@ -218,6 +218,7 @@ class Delete_Win(QWidget):
         return True
     
     def kek(self):
+        self.close()
         return False
 
 
