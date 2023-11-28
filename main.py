@@ -2,6 +2,9 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 from PyQt5.QtWidgets import QLCDNumber, QLabel, QVBoxLayout, QListWidget, QLineEdit
+import PyQt5.sip
+from docx import Document
+from openpyxl import Workbook
 
 
 class Search(QWidget):
@@ -122,6 +125,29 @@ class Sozdanie(QWidget):
         self.btn5.resize(85, 22)
         self.btn5.move(310, 19)
 
+    def create_docx_file(name):
+        puti = './folder/' + name
+        document = Document()
+        document.save(puti)
+    
+    def create_xlsx_file(name):
+        puti = './folder/' + name
+        workbook = Workbook()
+        workbook.save(puti)
+    
+    def create_txt_file(name):
+        puti = './folder/' + name
+        with open(puti, 'w') as file:
+            file.close()
+    
+    def update_file_list(self):
+        directory = './folder'
+        self.LCD2.clear()
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                # Печать пути к файлу
+                self.LCD2.addItem(os.path.join(root, file))
+
 
 class Delete(QWidget):
     def __init__(self):
@@ -154,6 +180,15 @@ class Delete(QWidget):
         if not self.new_window4:
             self.new_window4 = Delete_Win()
             self.new_window4.show()
+        self.update_file_list()
+    
+    def update_file_list(self):
+        directory = './folder'
+        self.LCD.clear()
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                # Печать пути к файлу
+                self.LCD.addItem(os.path.join(root, file))
 
 
 class Rename(QWidget):
@@ -213,7 +248,7 @@ class Delete_Win(QWidget):
         self.btn7.layout = QVBoxLayout()
         self.btn7.layout.addWidget(self.btn7)
         self.new_window = None
-    
+
     def lol(self):
         return True
     
