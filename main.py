@@ -130,7 +130,30 @@ class Delete(QWidget):
         self.setWindowTitle('Удалить файл')
         self.setGeometry(400, 415, 400, 415)
 
-        
+        self.LCD = QListWidget(self)
+        self.LCD.resize(390, 380)
+        self.LCD.move(5, 30)
+        self.serch_search()
+
+        self.btn9 = QPushButton('Удалить', self)
+        self.btn9.resize(100, 20)
+        self.btn9.move(296, 5)
+        self.btn9.clicked.connect(self.ydali)
+        self.btn9.layout = QVBoxLayout()
+        self.btn9.layout.addWidget(self.btn9)
+        self.new_window4 = None
+    
+    def serch_search(self):
+        directory = './folder'
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                # Печать пути к файлу
+                self.LCD.addItem(os.path.join(root, file))
+
+    def ydali(self):
+        if not self.new_window4:
+            self.new_window4 = Delete_Win()
+            self.new_window4.show()
 
 
 class Rename(QWidget):
@@ -170,18 +193,32 @@ class Delete_Win(QWidget):
         super().__init__()
 
         self.setWindowTitle('Точно?')
-        self.setGeometry(100, 70, 100, 70)
+        self.setGeometry(270, 70, 270, 70)
 
         self.label = QLabel('Вы уверены, что хотите удалить этот файл?', self)
-        self.label.move(33, 20)
+        self.label.move(20, 20)
 
         self.btn6 = QPushButton('Нет', self)
-        self.btn6.resize(85, 22)
-        self.btn6.move(10, 50)
+        self.btn6.resize(65, 22)
+        self.btn6.move(60, 40)
+        self.btn6.clicked.connect(self.kek)
+        self.btn6.layout = QVBoxLayout()
+        self.btn6.layout.addWidget(self.btn6)
+        self.new_window = None
 
         self.btn7 = QPushButton('Да', self)
-        self.btn7.resize(85, 22)
-        self.btn7.move(80, 50)
+        self.btn7.resize(65, 22)
+        self.btn7.move(140, 40)
+        self.btn7.clicked.connect(self.lol)
+        self.btn7.layout = QVBoxLayout()
+        self.btn7.layout.addWidget(self.btn7)
+        self.new_window = None
+    
+    def lol(self):
+        return True
+    
+    def kek(self):
+        return False
 
 
 if __name__ == '__main__':
