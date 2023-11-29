@@ -124,18 +124,42 @@ class Sozdanie(QWidget):
         self.btn5 = QPushButton('Создать', self)
         self.btn5.resize(85, 22)
         self.btn5.move(310, 19)
+        self.btn5.clicked.connect(self.texty)
 
-    def create_docx_file(name):
+        self.LCD = QListWidget(self)
+        self.LCD.resize(390, 350)
+        self.LCD.move(5, 60)
+        self.serch_search()
+
+    def serch_search(self):
+        directory = './folder'
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                # Печать пути к файлу
+                self.LCD.addItem(os.path.join(root, file))
+
+    def texty(self):
+        text = self.LCD2.text()
+        if '.docx' in text:
+            return self.create_docx_file(text)
+        elif '.xlsx' in text:
+            return self.create_xlsx_file(text)
+        elif '.txt' in text:
+            return self.create_txt_file(text)
+        elif '.docx' and '.xlsx' and '.txt' not in text:
+            pass
+
+    def create_docx_file(self, name):
         puti = './folder/' + name
         document = Document()
         document.save(puti)
     
-    def create_xlsx_file(name):
+    def create_xlsx_file(self, name):
         puti = './folder/' + name
         workbook = Workbook()
         workbook.save(puti)
     
-    def create_txt_file(name):
+    def create_txt_file(self, name):
         puti = './folder/' + name
         with open(puti, 'w') as file:
             file.close()
