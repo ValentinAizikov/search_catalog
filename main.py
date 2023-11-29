@@ -2,7 +2,6 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 from PyQt5.QtWidgets import QLCDNumber, QLabel, QVBoxLayout, QListWidget, QLineEdit
-import PyQt5.sip
 from docx import Document
 from openpyxl import Workbook
 
@@ -141,10 +140,13 @@ class Sozdanie(QWidget):
     def texty(self):
         text = self.LCD2.text()
         if '.docx' in text:
+            self.close()
             return self.create_docx_file(text)
         elif '.xlsx' in text:
+            self.close()
             return self.create_xlsx_file(text)
         elif '.txt' in text:
+            self.close()
             return self.create_txt_file(text)
         elif '.docx' and '.xlsx' and '.txt' not in text:
             pass
