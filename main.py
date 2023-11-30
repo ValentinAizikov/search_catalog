@@ -1,9 +1,12 @@
 import sys
 import os
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 from PyQt5.QtWidgets import QLCDNumber, QLabel, QVBoxLayout, QListWidget, QLineEdit
 from docx import Document
 from openpyxl import Workbook
+
+
+need = 0
 
 
 class Search(QWidget):
@@ -187,9 +190,13 @@ class Delete(QWidget):
         self.LCD.move(5, 30)
         self.serch_search()
 
+        self.LCD2 = QLineEdit(self)
+        self.LCD2.resize(290, 20)
+        self.LCD2.move(5, 5)
+
         self.btn9 = QPushButton('Удалить', self)
-        self.btn9.resize(100, 20)
-        self.btn9.move(296, 5)
+        self.btn9.resize(100, 22)
+        self.btn9.move(296, 4)
         self.btn9.clicked.connect(self.ydali)
         self.btn9.layout = QVBoxLayout()
         self.btn9.layout.addWidget(self.btn9)
@@ -203,11 +210,20 @@ class Delete(QWidget):
                 self.LCD.addItem(os.path.join(root, file))
 
     def ydali(self):
-        if not self.new_window4:
-            self.new_window4 = Delete_Win()
-            self.new_window4.show()
-        self.update_file_list()
-    
+        name = self.LCD2.text()
+        directory = './folder/' + name
+        reply = QMessageBox.question(None, 'Точно?', 'Вы уверены, что хотите удалить этот файл?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            if os.path.exists(directory):
+                os.remove(directory)
+                self.update_file_list()
+            else:
+                pass
+            self.close()
+        else:
+            self.close()
+
+
     def update_file_list(self):
         directory = './folder'
         self.LCD.clear()
@@ -247,40 +263,6 @@ class Edit(QWidget):
         self.btn5 = QPushButton('Сохранить', self)
         self.btn5.resize(85, 22)
         self.btn5.move(310, 390)
-
-
-class Delete_Win(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle('Точно?')
-        self.setGeometry(270, 70, 270, 70)
-
-        self.label = QLabel('Вы уверены, что хотите удалить этот файл?', self)
-        self.label.move(20, 20)
-
-        self.btn6 = QPushButton('Нет', self)
-        self.btn6.resize(65, 22)
-        self.btn6.move(60, 40)
-        self.btn6.clicked.connect(self.kek)
-        self.btn6.layout = QVBoxLayout()
-        self.btn6.layout.addWidget(self.btn6)
-        self.new_window = None
-
-        self.btn7 = QPushButton('Да', self)
-        self.btn7.resize(65, 22)
-        self.btn7.move(140, 40)
-        self.btn7.clicked.connect(self.lol)
-        self.btn7.layout = QVBoxLayout()
-        self.btn7.layout.addWidget(self.btn7)
-        self.new_window = None
-
-    def lol(self):
-        return True
-    
-    def kek(self):
-        self.close()
-        return False
 
 
 if __name__ == '__main__':
