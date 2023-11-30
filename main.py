@@ -6,9 +6,6 @@ from docx import Document
 from openpyxl import Workbook
 
 
-need = 0
-
-
 class Search(QWidget):
     def __init__(self):
         super().__init__()
