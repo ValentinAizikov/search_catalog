@@ -239,11 +239,39 @@ class Rename(QWidget):
 
         self.LCD3 = QLineEdit(self)
         self.LCD3.resize(300, 20)
-        self.LCD3.move(5, 20)
+        self.LCD3.move(5, 5)
+
+        self.LCD4 = QLineEdit(self)
+        self.LCD4.resize(300, 20)
+        self.LCD4.move(5, 30)
+
+        self.LCD = QListWidget(self)
+        self.LCD.resize(390, 350)
+        self.LCD.move(5, 60)
+        self.serch_search()
 
         self.btn5 = QPushButton('Переименовать', self)
         self.btn5.resize(85, 22)
         self.btn5.move(310, 19)
+        self.btn5.clicked.connect(self.ren)
+    
+    def serch_search(self):
+        directory = './folder'
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                # Печать пути к файлу
+                self.LCD.addItem(os.path.join(root, file))
+    
+    def ren(self):
+        directory = './folder/'
+        name = self.LCD3.text()
+        name1 = self.LCD4.text()
+        if os.path.exists((directory + name)):
+            oldname = os.path.join(directory, name)
+            newname = os.path.join(directory, name1)
+            os.rename(oldname, newname)
+        else:
+            pass
 
 
 class Edit(QWidget):
