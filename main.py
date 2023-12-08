@@ -439,21 +439,59 @@ class Edit(QWidget):
     # Инициализация класса
     def __init__(self):
         super().__init__()
-        
+        self.directory = './folder/'
+
         # Установка заголовка окна
         self.setWindowTitle('Редактировать файл')
         # Установка размеров и положения окна
         self.setGeometry(400, 415, 400, 415)
 
+        layout = QVBoxLayout()
+
+        self.file_list = QListWidget()
+        self.file_list.resize(390, 100)
+        self.file_list.move(5, 255)
+        self.file_list.itemClicked.connect(self.display_file_content)
+
+        self.file_content = QLineEdit()
+
         # Создание виджета для ввода текста
         self.LCD4 = QLineEdit(self)
-        self.LCD4.resize(390, 380)
+        self.LCD4.resize(390, 250)
         self.LCD4.move(5, 5)
 
         # Создание кнопки "Сохранить"
         self.btn5 = QPushButton('Сохранить', self)
         self.btn5.resize(85, 22)
         self.btn5.move(310, 390)
+        self.btn5.clicked.connect(self.save_file_content)
+
+        layout.addWidget(self.file_list)
+        layout.addWidget(self.file_content)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+
+        self.populate_file_list()
+    
+    def display_file_content(self, item):
+        file_path = './folder/' + item.text()
+        with open(file_path, 'r') as file:
+            content = file.read()
+            self.LCD4.setText(content)
+    
+    def populate_file_list(self):
+        directory = './folder/'
+        files = os.listdir(directory)
+        for file in files:
+            self.file_list.addItem(file)
+    
+    def save_file_content(self):
+        selected_item = self.file_list.currentItem()
+        file_path = './folder/' + selected_item.text()
+        new_content = self.file_content.text()
+        with open(file_path, 'w') as file:
+            file.write(new_content)
 
 
 # Запуск приложения
